@@ -1,0 +1,52 @@
+--- using rank function on MySQL version lower than 8.0 ------- 
+(Rank with gaps) 
+select s1.score ,(select count(distinct score) from scores s2 where s2.score>=s1.score) as "rank" from scores s1 order by s1.score desc; 
+--- highest number  
+
+SELECT max(ttl_cnt) AS count FROM ( 
+
+SELECT count(routing_id) AS ttl_cnt, routing_id FROM all_subs  
+
+WHERE acc_nbr BETWEEN '9420132150' AND '9420132190' GROUP BY routing_id) aa ; 
+
+ 
+
+ 
+
+--- consecutive number  
+
+SELECT ROUTING_ID FROM ( 
+
+SELECT count(routing_id) AS ttl_cnt, routing_id, rank() OVER (ORDER BY routing_id desc) AS rnk  FROM all_subs  
+
+WHERE acc_nbr BETWEEN '9420132150' AND '9420132190' GROUP BY routing_id  
+
+) aa WHERE rnk = 1 
+
+ --- hidden id of the manager  
+
+Select name as employee from employee where salary = (select max(salary) from employee where managerID = 3) 
+
+ 
+
+ 
+
+-- Duplicate Count (Having Count) 
+
+ 
+
+Select  email from person having count(email) > 1 
+
+ 
+
+ 
+
+183. Customers Who Never Order 
+
+ 
+
+Select name as Customers from customers where name not in ( 
+
+Select a.name from customers a right join orders b on a.id = b.customerId) 
+
+ 
